@@ -10,14 +10,14 @@
 	<xacro:macro name="cob_torso_v1" params="name parent *origin">
 
 
-		<!-- joint between base_link and arm_0_link -->
-		<joint name="${name}_0_joint" type="fixed" >
+		<!-- joint between base_link and torso_base_link -->
+		<joint name="${name}_base_joint" type="fixed" >
 			<insert_block name="origin" />
 			<parent link="${parent}" />
-			<child link="${name}_0_link" />
+			<child link="${name}_base_link" />
 		</joint>
 
-		<link name="${name}_0_link">
+		<link name="${name}_base_link">
 			<inertial>
 				<origin xyz="0 0 0" rpy="0 0 0"/>
 				<mass value="0.01"/>
@@ -25,7 +25,7 @@
 			</inertial>
 
 			<visual>
-				<origin xyz="0 0 -0.07" rpy="0 0 0" />
+				<origin xyz="0 0 -0.00" rpy="0 0 0" />
 				<geometry>
 					<cylinder radius="0" length="0"/>
 				</geometry>
@@ -44,7 +44,7 @@
 		<!-- joint between base_link and torso_lower_neck_tilt_link -->
 		<joint name="${name}_lower_neck_tilt_joint" type="revolute">
 			<origin xyz="0 0 0" rpy="0 0 0" />
-			<parent link="${name}_0_link"/>
+			<parent link="${name}_base_link"/>
 			<child link="${name}_lower_neck_tilt_link"/>
 			<axis xyz="0 0 1" />
 			<dynamics damping="25.0" friction="10.0"/>
@@ -145,22 +145,22 @@
 			</collision>
 		</link>
 
-		<!-- joint between torso_upper_neck_tilt_link and head_cover_link -->
-		<joint name="head_cover_joint" type="fixed">
-			<origin xyz="0 0 0" rpy="0 0 0" />
+		<!-- joint between torso_upper_neck_tilt_link and torso_upper_cover_link -->
+		<joint name="torso_upper_cover_joint" type="fixed">
+			<origin xyz="0 0 0" rpy="${M_PI} 0 0" />
 			<parent link="${name}_upper_neck_tilt_link"/>
-			<child link="head_cover_link"/>
+			<child link="torso_upper_cover_link"/>
 		</joint>
 
-		<link name="head_cover_link">
+		<link name="torso_upper_cover_link">
 			<inertial>
-				<origin xyz="0 0 0" rpy="${M_PI} 0 0"/>
+				<origin xyz="0 0 0" rpy="0 0 0"/>
 				<mass value="0.5"/>
 				<inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
 			</inertial>
 
 			<visual>
-				<origin xyz="0 0 0" rpy="${M_PI} 0 0" />
+				<origin xyz="0 0 0" rpy="0 0 0" />
 				<geometry>
 					<mesh filename="package://cob_description/meshes/torso/head_cover.stl" />
 				</geometry>
@@ -168,7 +168,7 @@
 			</visual>
 
 			<collision>
-				<origin xyz="0 0 0" rpy="${M_PI} 0 0" />
+				<origin xyz="0 0 0" rpy="0 0 0" />
 				<geometry>
 					<mesh filename="package://cob_description/meshes/torso/head_cover_collision.stl" />
 				</geometry>
